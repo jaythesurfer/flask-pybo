@@ -1,0 +1,28 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField,TextAreaField, PasswordField
+from wtforms.fields.html5 import EmailField
+from wtforms.validators import DataRequired, Length, EqualTo, Email
+
+class QuestionForm(FlaskForm):
+    subject=StringField('제목',validators=[DataRequired('제목은 필수 입력 사항입니다.')])
+    content=TextAreaField('내용',validators=[DataRequired('내용은 필수 입력 사항입니다.')])
+
+
+
+class AnswerForm(FlaskForm):
+    content=TextAreaField('내용',validators=[DataRequired('내용은 필수 입력 사항입니다.')])
+
+
+class UserCreateForm(FlaskForm):
+    username=StringField('user name',validators=[DataRequired(),Length(min=3,max=25)])
+    password1=PasswordField('password',validators=[DataRequired(),EqualTo('password2','비밀번호가 일치하지 않습니다.')])
+    password2=PasswordField('password confirmation',validators=[DataRequired()])
+    email=EmailField('email',[DataRequired(),Email()])
+
+
+class UserLoginForm(FlaskForm):
+    username=StringField('username',validators=[DataRequired(),Length(min=3,max=25)])
+    password=PasswordField('password',validators=[DataRequired()]) 
+
+class CommentForm(FlaskForm):
+    content=TextAreaField('내용',validators=[DataRequired()])
